@@ -14,10 +14,10 @@ void exibe(struct preco *p){
         printf("R$: %5.2f\n",p->reais);
         break;
     case 2:
-        printf("R$: %5.2f\n",p->dolares);
+        printf("U$: %5.2f\n",p->dolares);
         break;
     case 3:
-        printf("R$: %5.2f\n",  p->euros);
+        printf("E$: %5.2f\n",  p->euros);
         break;
     default:
         printf("ERRO");
