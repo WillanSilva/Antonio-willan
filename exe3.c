@@ -1,24 +1,31 @@
-#include <stdio.h>
-struct personagem{
-    int forca;
-    int energia;
-    int experiencia;
+#include<stdio.h>
+struct caixa{
+    int valor;
+    struct caixa * prox;
 };
-void preencheB(struct personagem *p){
-    printf("Digite a forca: ");
-    scanf("%d",&p->forca);
-    printf("Digite a energia: ");
-    scanf("%d",&p->energia);
-    printf("Digite a experiencia: ");
-    scanf("%d",&p->experiencia);
+void exibe(struct caixa *p){
+    while (p->prox!=NULL){
+        printf("%d->",p->valor);
+        p=p->prox;
     }
+    printf("%d",p->valor);
+    printf("\n");
+}         
 void main(void){
-    struct personagem p1;
-    preencheB(&p1);
-    struct personagem p2;
-    preencheB(&p2);
-    printf("p1:%d %d %d\np2:%d %d %d\n",p1.forca,p1.energia,p1.experiencia,p2.forca,p2.energia,p2.experiencia);
-    }
+    struct caixa c5={5,NULL};
+    struct caixa c4={7,&c5};
+    struct caixa c3={9,&c4};
+    struct caixa c2={3,&c3};
+    struct caixa c1={1,&c2};
+    struct caixa* cabeca;
+    exibe(&c1);
+    cabeca=&c1;
+    cabeca->prox->prox=&c4;
+    exibe(&c1);
+    cabeca=&c3;
+    cabeca->prox=&c1;
+    cabeca->prox->prox->prox=&c4;
+    exibe(&c3);
     
-    
-
+}
+        
