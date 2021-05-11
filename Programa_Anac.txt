@@ -187,5 +187,5 @@ nome,notas,cpf,qtd_materias,materias=pegar_dados(a,nome,notas,qtd_materias,mater
 resposta_no_programa,resposta_final_no_programa=calcula_resultado(qtd_materias,notas,resposta_no_programa,resposta_final_no_programa)
 verificar(qtd_materias,notas,cpf,resposta_no_site,resposta_no_programa,resposta_final_no_programa)
 a=int(input("Verificar os resultados finais 1-sim, 2-Não?: "))
-if(a==1 or a==2):
+if(a==1):
     calcula_resultado_final(a,nome,resposta_final_site,resposta_final_no_programa)
