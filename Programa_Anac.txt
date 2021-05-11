@@ -85,7 +85,7 @@ def calcula_resultado(qtd_materias,notas,resposta_no_programa,resposta_final_no_
                 else:
                     resposta_no_programa.append("R")
             
-            if(contador>1 or erro>1):
+            if(contador>1 or erro>=1):
                 resposta_final_no_programa.append("R")
             elif(contador==1 and erro==0):
                 resposta_final_no_programa.append("E")
@@ -114,7 +114,7 @@ def calcula_resultado(qtd_materias,notas,resposta_no_programa,resposta_final_no_
                     resposta_no_programa.append("E")
                 else:
                     resposta_no_programa.append("R")
-            if((contador+erro)>2):
+            if((contador)>2 or erro>=1):
                 resposta_final_no_programa.append("R")
             elif(contador==2 or contador==1  and erro==0):
                 resposta_final_no_programa.append("E")
