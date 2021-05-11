@@ -136,7 +136,7 @@ def calcula_resultado_final(a,nome,resposta_final_site,resposta_final_no_program
             for i in range(len(b)):
                 print("\nNome: ",nome[b[i]])
                 print("CPF: ", cpf[b[i]])
-                print("\nEra para ser: ",resposta_final_no_programa[b[i]])
+                print("\nResposta final era para ser: ",resposta_final_no_programa[b[i]])
                 print("\nE não: ", resposta_final_site[b[i]])
                 print(80*'-')
         else:
