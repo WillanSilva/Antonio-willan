@@ -1,0 +1,59 @@
+arq=open("arquivo.txt",'r+')
+dados=arq.readlines()
+ct_conteudo=[]
+vagas=[]
+aux_vagas=[]
+estado=[]
+ct=[]
+linhas=[]
+for i in range(len(dados)):
+    if(dados[i][:3]=='CT:'):
+        ct.append(dados[i])
+        numero=len(dados[i])
+        estado.append(dados[i][numero-3:numero-1])
+    elif(dados[i]=='\n' or dados[i]==''):
+        ct_conteudo.append(linhas)
+        linhas=[]
+        vagas.append(aux_vagas)
+        aux_vagas=[]
+    else:
+        linhas.append(dados[i].replace("\n",''))
+        numero=len(dados[i])
+        aux_vagas.append(dados[i][numero-3:numero-1])
+def vagas_totais(vagas):
+    cont=0
+    for i in range(len(ct_conteudo)):
+        for j in range(len(ct_conteudo[i])):
+            cont+=int(vagas[i][j])
+    print("vagas totais de todos os CT e todos os meses são:",cont) 
+def vagas_mes(vagas,ct_conteudo):
+    mes=input("Digite o mes exe (02): ")
+    cont=0
+    for i in range(len(vagas)):
+        for j in range(len(vagas[i])):
+            if (ct_conteudo[i][j][9:11]==mes):
+                cont+=int(vagas[i][j])
+    print("numero total de vagas no mes: ",mes)
+    print("é de : ",cont)
+def vaga_estado_mes(estado,vagas,ct_conteudo):
+    mes=input("Digite o mes exe (02): ")
+    esta=input("Digite o estado exe (SP): ")
+    esta=esta.upper()
+    cont=0
+    for i in range(len(vagas)):
+        for j in range(len(vagas[i])):
+            if (ct_conteudo[i][j][9:11]==mes and estado[i]==esta):
+                cont+=int(vagas[i][j])
+    print("A quantidades de vagas no mes: ",mes)
+    print("E no estado: ", esta)
+    print("É de: ",cont)
+print("Digite 1- para VAGAS TOTAIS")
+print("Digite 2- para VAGAS TOTAIS NO MES")
+print("Digite 3- para VAGAS TOTAIS NO MES E NO REFERIDO ESTADO")
+entrada=int(input("Digite o numero: "))
+if (entrada==1):
+    vagas_totais(vagas)
+elif(entrada==2):
+    vagas_mes(vagas,ct_conteudo)
+elif(entrada==3):
+    vaga_estado_mes(estado,vagas,ct_conteudo)
