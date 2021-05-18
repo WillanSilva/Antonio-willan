@@ -1,3 +1,4 @@
+#sempre que copiar os dados no arquivo.txt lembrar de dar uma linha ao final utilizando o enter e verificar que não tenha o EXAME no inicio.
 arq=open("arquivo.txt",'r+')
 dados=arq.readlines()
 ct_conteudo=[]
