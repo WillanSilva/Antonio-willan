@@ -37,16 +37,22 @@ def vagas_mes(vagas,ct_conteudo):
     print("é de : ",cont)
 def vaga_estado_mes(estado,vagas,ct_conteudo):
     mes=input("Digite o mes exe (02): ")
-    esta=input("Digite o estado exe (SP): ")
-    esta=esta.upper()
+    aux=estado
     cont=0
-    for i in range(len(vagas)):
-        for j in range(len(vagas[i])):
-            if (ct_conteudo[i][j][9:11]==mes and estado[i]==esta):
-                cont+=int(vagas[i][j])
-    print("A quantidades de vagas no mes: ",mes)
-    print("E no estado: ", esta)
-    print("É de: ",cont)
+    ufs = ['AM','RR','AP','PA','TO','RO','AC','MA','PI','CE','RN','PE','PB','SE','AL','BA','MT','MS','GO','DF','RJ','SP','ES','MG','PR','RS','SC']
+    print(len(vagas))
+    for k in range(len(ufs)):
+        for i in range(len(vagas)):
+            for j in range(len(vagas[i])):
+                if (ct_conteudo[i][j][9:11]==mes and ufs[k]==estado[i]):
+                    print(ct_conteudo[i][j])
+                    print(vagas[i][j])
+                    cont+=int(vagas[i][j])
+                    print(ufs[k])
+        print("A quantidades de vagas no mes: ",mes)
+        print("E no estado: ", ufs[k])
+        print("É de: ",cont)
+        cont=0
 print("Digite 1- para VAGAS TOTAIS")
 print("Digite 2- para VAGAS TOTAIS NO MES")
 print("Digite 3- para VAGAS TOTAIS NO MES E NO REFERIDO ESTADO")
