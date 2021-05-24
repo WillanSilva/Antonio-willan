@@ -1,4 +1,3 @@
-#sempre que copiar os dados no arquivo.txt lembrar de dar uma linha ao final utilizando o enter e verificar que não tenha o EXAME no inicio.
 import pandas as pd
 arq=open("arquivo.txt",'r+')
 dados=arq.readlines()
@@ -42,6 +41,7 @@ def vagas_mes(vagas,ct_conteudo):
     print()
     print("numero total de vagas no mês: ",mes)
     print("é de : ",cont)
+    return cont
 def vaga_estado_mes(estado,vagas,ct_conteudo):
     mes=input("Digite o mes exe (06)->junho: ")
     aux=estado
@@ -58,7 +58,6 @@ def vaga_estado_mes(estado,vagas,ct_conteudo):
         print()
         cont=0
 def criando_arquivo(ct,estado,vagas,ct_conteudo):
-    dicio={'CT':ct,'CT_CONTEUDO':ct_conteudo,'vagas': vagas,'Estado':estado}
     resultado=[]
     for  i in range(len(ct)):
         for j in range(len(vagas[i])):
@@ -78,11 +77,50 @@ def criando_arquivo(ct,estado,vagas,ct_conteudo):
         print("\nErro em colocar os dados no arquivo do arquivo")
         print("\nVerifique se o arquivo está aberto\n")
     return ()
+def para_vagas_totais_no_mes(ct,estado,vagas,ct_conteudo):
+    mes=input("Digite o mes exe 06->junho: ")
+    cont=0
+    vagas_por_ct=[]
+    for i in range(len(vagas)):
+        for j in range(len(vagas[i])):
+            if (ct_conteudo[i][j][9:11]==mes):
+                cont+=int(vagas[i][j])
+        vagas_por_ct.append(cont)
+        cont=0
+    """for i in range(len(vagas_por_ct)):
+        ct[i].replace("\n","")
+        print("{}Mês: {} Vagas: {}".format(ct[i],mes,vagas_por_ct[i]))
+        print()
+        cont+=vagas_por_ct[i]
+    print("Vagas totais: {}\nNo mês: {}".format(cont,mes))"""
+    exel=[]
+    for i in range(len(vagas_por_ct)):
+        ct[i].replace("\n","")
+        ct[i].replace("CT:","")
+        dicio={'CT':ct[i],'Vagas':vagas_por_ct[i]}
+        exel.append(dicio)
+        cont+=vagas_por_ct[i]
+    dicio={"CT":"TOTAL","Vagas":cont}
+    exel.append(dicio)
+    de=pd.DataFrame(exel)
+    try:
+        arquivo=pd.ExcelWriter("Resultado_programa.xlsx")
+    except:
+        print("Erro na abertura de arquivo")
+        print("\nVerifique se o arquivo está aberto\n")
+    try:
+        de.to_excel(arquivo,sheet_name='TODOS OS CTs')
+        arquivo.save()
+    except:
+        print("\nErro em colocar os dados do arquivo")
+        print("\nVerifique se o arquivo está aberto\n")
+    
 while  True:
     print("Digite 1- para VAGAS TOTAIS")
     print("Digite 2- para VAGAS TOTAIS NO MES")
     print("Digite 3- para VAGAS TOTAIS NO MÊS E NO REFERIDO ESTADO")
     print("Digite 4-para criar arquivo Exel")
+    print("Digite 5- para VAGAS TOTAIS NO MÊS E NO REFERIDO CT")
     entrada=int(input("Digite o numero: "))
     if (entrada==1):
         vagas_totais(vagas)
@@ -92,10 +130,12 @@ while  True:
         vaga_estado_mes(estado,vagas,ct_conteudo)
     elif(entrada==4):
         criando_arquivo(ct,estado,vagas,ct_conteudo)
+    elif(entrada==5):
+        para_vagas_totais_no_mes(ct,estado,vagas,ct_conteudo)
     print()
     ence=int(input("Encerrar programa? 1 - Sim, 2 - Não: "))
     if (ence==1):
         break
 
-        
+      
 
