@@ -18,13 +18,13 @@ for i in range(len(dados)):
         linhas.append(dados[i].replace("\n",''))
         numero=len(dados[i])
         aux_vagas.append(dados[i][numero-3:numero-1])
-    if(dados[i]=='\n' or tamanho==i):
+    if((dados[i]=='\n' and i!=1) or tamanho==i):
         ct_conteudo.append(linhas)
         linhas=[]
         vagas.append(aux_vagas)
         aux_vagas=[]
 print(vagas[-1])
-def vagas_totais(vagas):
+def vagas_totais(vagas): #1 nas opções
     cont=0
     for i in range(len(ct_conteudo)):
         for j in range(len(ct_conteudo[i])):
@@ -32,7 +32,7 @@ def vagas_totais(vagas):
     print()
     print("vagas totais de todos os CT e todos os meses são: {} Vagas".format(cont)) 
 def vagas_mes(vagas,ct_conteudo):
-    mes=input("Digite o mes exe (02): ")
+    mes=input("Digite o mes exe (02): ")#2 nas opções
     cont=0
     for i in range(len(vagas)):
         for j in range(len(vagas[i])):
@@ -42,7 +42,7 @@ def vagas_mes(vagas,ct_conteudo):
     print("numero total de vagas no mês:",meses[int(mes)-1])
     print("é de : ",cont)
     return cont
-def vaga_estado_mes(estado,vagas,ct_conteudo,meses):
+def vaga_estado_mes(estado,vagas,ct_conteudo,meses):#3 nas opções
     mes=input("Digite o mes exe (06)->junho: ")
     cont=0
     ufs = ['AM','RR','AP','PA','TO','RO','AC','MA','PI','CE','RN','PE','PB','SE','AL','BA','MT','MS','GO','DF','RJ','SP','ES','MG','PR','RS','SC']
@@ -68,7 +68,7 @@ def vaga_estado_mes(estado,vagas,ct_conteudo,meses):
         print("Erro na abertura de arquivo")
         print("\nVerifique se o arquivo está aberto\n")
     try:
-        de.to_excel(arquivo,sheet_name='TODOS OS CTs')
+        de.to_excel(arquivo,sheet_name="Resultado "+mes)
         arquivo.save()
         print()
         print("Arquivo salvo com sucesso!")
@@ -78,7 +78,7 @@ def vaga_estado_mes(estado,vagas,ct_conteudo,meses):
         print("\nErro em colocar os dados do arquivo")
         print("\nVerifique se o arquivo está aberto\n")
     
-def criando_arquivo(ct,estado,vagas,ct_conteudo):
+def criando_arquivo(ct,estado,vagas,ct_conteudo):#4 nas opções
     resultado=[]
     for  i in range(len(ct)):
         for j in range(len(vagas[i])):
@@ -97,7 +97,7 @@ def criando_arquivo(ct,estado,vagas,ct_conteudo):
         print("\nErro em colocar os dados no arquivo do arquivo")
         print("\nVerifique se o arquivo está aberto\n")
     return ()
-def para_vagas_totais_no_mes(ct,estado,vagas,ct_conteudo,meses):
+def para_vagas_totais_no_mes(ct,estado,vagas,ct_conteudo,meses):#5 nas opções
     mes=input("Digite o mes exe 06->junho: ")
     cont=0
     vagas_por_ct=[]
@@ -108,6 +108,7 @@ def para_vagas_totais_no_mes(ct,estado,vagas,ct_conteudo,meses):
         vagas_por_ct.append(cont)
         cont=0
     exel=[]
+    
     for i in range(len(vagas_por_ct)):
         ct[i]=ct[i].replace('\n','')
         ct[i]=ct[i].replace('CT: ','')
@@ -141,23 +142,18 @@ while  True:
     print("Digite 3- para VAGAS TOTAIS NO MÊS E NO REFERIDO ESTADO")
     print("Digite 4-para criar arquivo Exel(vivian)")
     print("Digite 5- para VAGAS TOTAIS NO MÊS E NO REFERIDO CT")
-    try:
-        entrada=int(input("Digite o numero: "))
-        if (entrada==1):
-            vagas_totais(vagas)
-        elif(entrada==2):
-            vagas_mes(vagas,ct_conteudo)
-        elif(entrada==3):
-            vaga_estado_mes(estado,vagas,ct_conteudo,meses)
-        elif(entrada==4):
-            criando_arquivo(ct,estado,vagas,ct_conteudo)
-        elif(entrada==5):
-            para_vagas_totais_no_mes(ct,estado,vagas,ct_conteudo,meses)
-        print()
-        ence=int(input("Encerrar programa? 1 - Sim, 2 - Não: "))
-        if (ence==1):
-            break
-    except:
-        print()
-        print("Digite novamente o numero")
-        print()
+    entrada=int(input("Digite o numero: "))
+    if (entrada==1):
+        vagas_totais(vagas)
+    elif(entrada==2):
+        vagas_mes(vagas,ct_conteudo)
+    elif(entrada==3):
+        vaga_estado_mes(estado,vagas,ct_conteudo,meses)
+    elif(entrada==4):
+        criando_arquivo(ct,estado,vagas,ct_conteudo)
+    elif(entrada==5):
+        para_vagas_totais_no_mes(ct,estado,vagas,ct_conteudo,meses)
+    print()
+    ence=int(input("Encerrar programa? 1 - Sim, 2 - Não: "))
+    if (ence==1):
+        break
