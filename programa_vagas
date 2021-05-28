@@ -221,3 +221,4 @@ while  True:
     ence=int(input("Encerrar programa? 1 - Sim, 2 - Não: "))
     if (ence==1):
         break
+      
