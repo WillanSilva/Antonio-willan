@@ -12,20 +12,22 @@ ct=[]
 linhas=[]
 meses=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"]
 for i in range(len(dados)):
-    if(dados[i][:3]=='CT:'):
+    if(dados[i][:3]=='CT:'):#pega a linha que contém as 3 letras CT:
+        dados[i]=dados[i].replace("CT: ","")
+        dados[i]=dados[i].replace("\n","")
         ct.append(dados[i])
         numero=len(dados[i])
-        estado.append(dados[i][numero-3:numero-1])
-    elif(dados[i][:3]=="Dat"):
-        linhas.append(dados[i].replace("\n",''))
+        estado.append(dados[i][numero-3:numero-1])#pega o UF e adiciona na lista estado
+    elif(dados[i][:3]=="Dat"):#pega a linha que contém 3 letras Dat 
+        linhas.append(dados[i].replace("\n",''))#adiciono a linha em uma lista sem o /n
         numero=len(dados[i])
-        aux_vagas.append(dados[i][numero-3:numero-1])
-    if((dados[i]=='\n' and i!=1) or tamanho==i):
-        ct_conteudo.append(linhas)
-        linhas=[]
-        vagas.append(aux_vagas)
-        aux_vagas=[]
-print(vagas[-1])
+        aux_vagas.append(dados[i][numero-3:numero-1])#adiciono a qtd de vagas nessa linha em uma lista auxiliar
+    if((dados[i]=='\n' and i!=1) or tamanho==i):#final do ct o /n se refere que a leitura dos dados daquele ct acabou
+        ct_conteudo.append(linhas)#adiciono a lista linhas, assim cada elemento de ct_conteudo corresponde ao ct e o conteudo desse elemento corresponde as linhas das datas 
+        linhas=[]#coloco como vazio pois a linhas é somente uma auxilar para pegar as linhas e colocalas no ct_conteudo 
+        vagas.append(aux_vagas)#adiciono aux_vagas em  vagas para cada elemento de vagas corresponder ao ct, mesma logica do ct_conteudo
+        aux_vagas=[]#como é auxiliar é vazio tmb só para pegar o numero das vagas
+print(vagas[-1])#só para verificar se esta pegando o ultimo elemento do arquivo
 def vagas_totais(vagas): #1 nas opções
     cont=0
     for i in range(len(ct_conteudo)):
@@ -152,19 +154,49 @@ def por_dia(ct,vagas,ct_conteudo):#6
       break
     except:
       print("Digite novamente a data limite !!")
+  print("gostaria de visualisar o resultado por: ")
+  print("1 - Por CT")
+  print("2- por todos os CTs")
+  while True:
+    try:
+      veri=int(input("Digite o numero: "))
+      break
+    except:
+      print("Digite novamente a data inicial!!")
   cont=0
+  if (veri==1):
+    nome_ct=input("Digite o nome do CT: ")
+    tamanho=len(nome_ct)
+  achei=False
   for i in range(len(ct_conteudo)):
-    print(ct[i])
+    if(veri==2):
+      print(ct[i])
+    if(nome_ct==ct[i][:tamanho]):
+      print()
+      print(ct[i])
+      achei=True
+      print()
+    else:
+      achei=False
     for j in range(len(ct_conteudo[i])):
         aux=ct_conteudo[i][j][6:16]
         aux=datetime.strptime(aux, '%d/%m/%Y').date()
-        if (aux>=data and aux<=data2):
+        if (aux>=data and aux<=data2 and veri==2):
           print(ct_conteudo[i][j])
           cont+=int(vagas[i][j])
-    print()
-    print('Vagas totais: ',cont)
-    cont=0
-    print()
+          achei=False
+        elif (aux>=data and aux<=data2 and achei):
+          print(ct_conteudo[i][j])
+          cont+=int(vagas[i][j])
+    if(veri==1 and achei):
+      print("Total: ",cont)
+      print()
+      cont=0
+    elif(veri==2):
+      print()
+      print('Vagas totais: ',cont)
+      cont=0
+      print()
 while  True:
     print("Digite 1- para VAGAS TOTAIS")
     print("Digite 2- para VAGAS TOTAIS NO MES")
@@ -189,5 +221,3 @@ while  True:
     ence=int(input("Encerrar programa? 1 - Sim, 2 - Não: "))
     if (ence==1):
         break
-      
-
