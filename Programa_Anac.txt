@@ -22,6 +22,8 @@ def pegar_dados(a,nome,cpf,notas,qtd_materias,materias,resposta_final_site,respo
                 aux2=aux2.replace('H','')
                 aux2=aux2.replace('P','')
                 aux2=aux2.replace("A",'')
+                aux2=aux2.replace("E",'')
+                aux2=aux2.replace("G",'')
                 nota.append(float(aux2))
                 resposta_final_site.append(i[-2])
             else:
