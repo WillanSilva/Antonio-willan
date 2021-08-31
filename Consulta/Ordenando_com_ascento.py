@@ -1,0 +1,22 @@
+import locale
+a=[]
+#exemplo
+a.append({'CT':'Agua Boa'})
+a.append({'CT':'Agua Boa'})
+a.append({'CT':'fgua Boa'})
+a.append({'CT':'Agua Boa'})
+a.append({'CT':'Igua Boa'})
+a.append({'CT':'Élegua Boa'})
+a.append({'CT':'Adua Boa'})
+a.append({'CT':'Ácrrgua Boa'})
+a.append({'CT':'Áarua Boa'})
+a.append({'CT':'aaarua Boa'})
+a.append({'CT':'barua Boa'})
+a.append({'CT':'Carua Boa'})
+a.append({'CT':'darua Boa'})
+a.append({'CT':'Áarua Boa'})
+locale.setlocale(locale.LC_ALL, 'pt_BR.UTF8')
+print(a)
+a=sorted(a,key=lambda a: (locale.strxfrm(a['CT'])))
+print(30*'*')
+print(a)
