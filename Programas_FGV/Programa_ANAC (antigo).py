@@ -1,0 +1,193 @@
+def pegar_dados(a,nome,cpf,notas,qtd_materias,materias,resposta_final_site,resposta_no_site):
+    nota=[]
+    contagem=0
+    parada=' \t \t \t \t \t \t \t \n'
+    tamanho_de_linhas=len(a)
+    qtd=0
+    candidatos=-1
+    for i in a:
+        if (i[:3]=='DEF'):
+            if (i[:5]!='DEF\t0'):
+                aux1=i[6:10]
+                aux1=aux1.replace('\t','')
+                materias.append(aux1)
+                qtd+=1
+                aux2=i[10:16]
+                aux2=aux2.replace(',','.')
+                aux2=aux2.replace('\t','')
+                aux2=aux2.replace('-1','')
+                aux2=aux2.replace('-2','')
+                aux2=aux2.replace('V','')
+                aux2=aux2.replace('T','')
+                aux2=aux2.replace('H','')
+                aux2=aux2.replace('P','')
+                aux2=aux2.replace("A",'')
+                aux2=aux2.replace("E",'')
+                aux2=aux2.replace("G",'')
+                nota.append(float(aux2))
+                resposta_final_site.append(i[-2])
+            else:
+                resposta_no_site.append(i[-2])
+                aux1=a[contagem-6]
+                aux2=len(aux1)
+                aux1=aux1[0:aux2-1]
+                nome.append(aux1)
+                aux1=a[contagem-5]
+                aux1=aux1[0:11]
+                cpf.append(aux1)
+                candidatos+=1
+        if(i==parada or  i==a[tamanho_de_linhas-1]):
+            qtd_materias.append(qtd)
+            lista=[0]*(qtd)
+            notas.append(lista)
+            for i in range(qtd):
+                notas[candidatos][i]=nota[i]
+            qtd=0
+            nota=[]
+        contagem+=1
+    return (nome,notas,cpf,qtd_materias,materias)
+#fazer uma função pra printar
+def calcula_resultado(qtd_materias,notas,resposta_no_programa,resposta_final_no_programa):
+    for i in range(len(qtd_materias)):
+        if(qtd_materias[i]==1 or qtd_materias[i]==2):
+            aux=0
+            for j in range(qtd_materias[i]):
+                if(notas[i][j]>=70.00):
+                    resposta_no_programa.append("A")
+                    aux+=1
+                else:
+                    resposta_no_programa.append("R")
+            if(aux==2 or (qtd_materias[i]==1 and aux==1)):
+                resposta_final_no_programa.append("A")
+            else:
+                resposta_final_no_programa.append("R")
+                    
+        elif(qtd_materias[i]==3 or qtd_materias[i]==4):
+            aux=[]
+            for j in range(qtd_materias[i]):
+                if(notas[i][j]>=70.00):
+                    aux.append("A")
+                elif(notas[i][j]>=30.00):
+                    aux.append("E")
+                else:
+                    aux.append("R")
+            #print(aux)
+            contador=0
+            erro=0
+            for i in aux:
+                if(i=="E"):
+                    contador+=1
+                elif (i=="R"):
+                    erro+=1
+            for j in range(len(aux)):
+                if (aux[j]=="A"):
+                    resposta_no_programa.append("A")
+                elif (contador==1 and erro==0):
+                    resposta_no_programa.append("E")
+                else:
+                    resposta_no_programa.append("R")
+            
+            if(contador>1 or erro>=1):
+                resposta_final_no_programa.append("R")
+            elif(contador==1 and erro==0):
+                resposta_final_no_programa.append("E")
+            else:
+                resposta_final_no_programa.append("A")
+        else:
+            aux=[]
+            for j in range(qtd_materias[i]):
+                if(notas[i][j]>=70.00):
+                    aux.append("A")
+                elif(notas[i][j]>=30.00):
+                    aux.append("E")
+                else:
+                    aux.append("R")
+            contador=0
+            erro=0
+            for i in aux:
+                if(i=="E"):
+                    contador+=1
+                elif(i=="R"):
+                    erro+=1
+            for j in range(len(aux)):
+                if (aux[j]=="A"):
+                    resposta_no_programa.append("A")
+                elif ((contador==2 or contador==1) and erro==0):
+                    resposta_no_programa.append("E")
+                else:
+                    resposta_no_programa.append("R")
+            if((contador)>2 or erro>=1):
+                resposta_final_no_programa.append("R")
+            elif(contador==2 or contador==1  and erro==0):
+                resposta_final_no_programa.append("E")
+            else:
+                resposta_final_no_programa.append("A")
+    return (resposta_no_programa,resposta_final_no_programa)
+def calcula_resultado_final(a,nome,resposta_final_site,resposta_final_no_programa):
+    if(a==1):
+        b=[]
+        contador=0
+        for i in range(len(resposta_final_site)):
+            if (resposta_final_site[i]!=resposta_final_no_programa[i]):
+                b.append(contador)
+            contador+=1
+        if (len(b)!=0):
+            print("\nResposta final no site estão errados!!!!")
+            print("\nO candidato em que está errado é : ")
+            print(80*'-')
+            for i in range(len(b)):
+                print("\nNome: ",nome[b[i]])
+                print("CPF: ", cpf[b[i]])
+                print("\nResposta final era para ser: ",resposta_final_no_programa[b[i]])
+                print("\nE não: ", resposta_final_site[b[i]])
+                print(80*'-')
+        else:
+            print("\nTodas as respostas finais estão corretas!!!\n")
+            
+    return ()
+def verificar(qtd_materias,notas,cpf,resposta_no_site,resposta_no_programa,resposta_final_no_programa):
+    tamanho=0
+    b=[]
+    for i in resposta_no_site:
+        if (i!=resposta_no_programa[tamanho]):
+            a=False
+            b.append(tamanho)
+        tamanho+=1
+    if (len(b)==0):
+        print("\nTodos as notas com os simbolos de A, R e E estão corretas!!!\n")
+    else:
+        print("\nPossui pelo menos 1 pessoa errada!!")
+        print("\nO candidato cujo está errado é: \n")
+        print(80*'-')
+        contador=0
+        for i in range(len(qtd_materias)):
+            for j in range(qtd_materias[i]):
+                for k in range(len(b)):
+                    if(contador==b[k]):
+                        
+                        print("Nome: ", nome[i])
+                        print("CPF: ",cpf[i])
+                        print("Nota em que deu erro: ",notas[i][j])
+                        print("Era para ser: ",resposta_no_programa[b[k]])
+                        print("E não: ",resposta_no_site[b[k]])
+                        print("\n")
+                        print(80*'-')
+                contador+=1
+arq=open('arquivo.txt','r+')
+a=arq.readlines()
+arq.close()
+nome=[]
+cpf=[]
+resposta_no_site=[]
+resposta_no_programa=[]
+resposta_final_site=[]
+resposta_final_no_programa=[]
+notas=[]
+materias=[]
+qtd_materias=[]
+nome,notas,cpf,qtd_materias,materias=pegar_dados(a,nome,notas,qtd_materias,materias,cpf,resposta_no_site,resposta_final_site)
+resposta_no_programa,resposta_final_no_programa=calcula_resultado(qtd_materias,notas,resposta_no_programa,resposta_final_no_programa)
+verificar(qtd_materias,notas,cpf,resposta_no_site,resposta_no_programa,resposta_final_no_programa)
+a=int(input("Verificar os resultados finais 1-sim, 2-Não?: "))
+if(a==1):
+    calcula_resultado_final(a,nome,resposta_final_site,resposta_final_no_programa)
