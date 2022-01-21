@@ -1,4 +1,3 @@
-#programa com a amostra
 import pandas as pd
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
@@ -50,7 +49,6 @@ def pegando_sheet(a,tamanho,dados,shet):
                 except:
                     print("erro na conversão ou erro na procura da amostra")
                 amt.append(am)
-            print(amt)
             if(amt[0]>=amt[1] and amt[0]>=amt[2] and amt[0]>=amt[3]):
                 maior=amt[0]
             elif (amt[1]>=amt[2] and amt[1]>=amt[3]):
@@ -73,10 +71,10 @@ def calculando_porcentagem(dados,tamanho):
         ambiente=dados[i]['ambiente'][0]+dados[i]['ambiente'][1]
         quali=dados[i]['qualidade'][0]+dados[i]['qualidade'][1]
         etica=dados[i]['etica'][0]+dados[i]['etica'][1]
-        novo_dados={'CT':dados[i]['CT'],'Localização':'Regular: '+ str(dados[i]['local'][0])+'  e  '+'Ruim: '+str(dados[i]['local'][1]),'soma_L':str(local),
-                  'Ambiente':'Regular: '+ str(dados[i]['ambiente'][0])+'  e  '+'Ruim: '+ str(dados[i]['ambiente'][1]),'soma_A':str(ambiente),
-                  'Qualidade':'Regular: '+ str(dados[i]['qualidade'][0])+'  e  '+'Ruim: '+ str(dados[i]['qualidade'][1]),'soma_Q':str(quali),
-                  'Ética':'Regular: '+ str(dados[i]['etica'][0])+'  e  '+'Ruim: '+ str(dados[i]['etica'][1]),'soma_E':str(etica),'Amostra':str(dados[i]['amostra'])}
+        novo_dados={'CT':dados[i]['CT'],'Localização':'Regular: '+ str(dados[i]['local'][0])+"%"+'  e  '+'Ruim: '+str(dados[i]['local'][1])+"%",'soma_L':str(local)+"%",
+                  'Ambiente':'Regular: '+ str(dados[i]['ambiente'][0])+"%"+'  e  '+'Ruim: '+ str(dados[i]['ambiente'][1])+"%",'soma_A':str(ambiente)+"%",
+                  'Qualidade':'Regular: '+ str(dados[i]['qualidade'][0])+"%"+'  e  '+'Ruim: '+ str(dados[i]['qualidade'][1])+"%",'soma_Q':str(quali)+"%",
+                  'Ética':'Regular: '+ str(dados[i]['etica'][0])+"%"+'  e  '+'Ruim: '+ str(dados[i]['etica'][1])+"%",'soma_E':str(etica)+"%",'Amostra':str(dados[i]['amostra'])}
         if((dados[i]['local'][0]+dados[i]['local'][1])>=10):
             cts_problema.append(novo_dados)
         elif((dados[i]['ambiente'][0]+dados[i]['ambiente'][1])>=10):
@@ -85,14 +83,15 @@ def calculando_porcentagem(dados,tamanho):
             cts_problema.append(novo_dados)
         elif((dados[i]['etica'][0]+dados[i]['etica'][1])>=10):
             cts_problema.append(novo_dados)
-        dados[i]={'CT':dados[i]['CT'],'Localização':'Regular: '+ str(dados[i]['local'][0])+'  e  '+'Ruim: '+str(dados[i]['local'][1]),'soma_L':str(local),
-                  'Ambiente':'Regular: '+ str(dados[i]['ambiente'][0])+'  e  '+'Ruim: '+ str(dados[i]['ambiente'][1]),'soma_A':str(ambiente),
-                  'Qualidade':'Regular: '+ str(dados[i]['qualidade'][0])+'  e  '+'Ruim: '+ str(dados[i]['qualidade'][1]),'soma_Q':str(quali),
-                  'Ética':'Regular: '+ str(dados[i]['etica'][0])+'  e  '+'Ruim: '+ str(dados[i]['etica'][1]),'soma_E':str(etica),'Amostra':str(dados[i]['amostra'])}
+        dados[i]={'CT':dados[i]['CT'],'Localização':'Regular: '+ str(dados[i]['local'][0])+"%"+'  e  '+'Ruim: '+str(dados[i]['local'][1])+"%",'soma_L':str(local)+"%",
+                  'Ambiente':'Regular: '+ str(dados[i]['ambiente'][0])+"%"+'  e  '+'Ruim: '+ str(dados[i]['ambiente'][1])+"%",'soma_A':str(ambiente)+"%",
+                  'Qualidade':'Regular: '+ str(dados[i]['qualidade'][0])+"%"+'  e  '+'Ruim: '+ str(dados[i]['qualidade'][1])+"%",'soma_Q':str(quali)+"%",
+                  'Ética':'Regular: '+ str(dados[i]['etica'][0])+"%"+'  e  '+'Ruim: '+ str(dados[i]['etica'][1])+"%",'soma_E':str(etica)+"%",'Amostra':str(dados[i]['amostra'])}
     return cts_problema,dados
 def criando_arquivo(cts_problema,dados):
     df=pd.DataFrame(cts_problema)
     de=pd.DataFrame(dados)
+    print(dados)
     try:
         arquivo=pd.ExcelWriter("Resultado_programa.xlsx")
     except:
