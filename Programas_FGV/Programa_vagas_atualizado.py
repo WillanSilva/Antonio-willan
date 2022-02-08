@@ -370,7 +370,7 @@ data_hoje="17-01-22"
 passou=True
 print(data_hoje)
 try:
-  arq=open("Dados\dado"+data_hoje+".txt",'r+')
+  arq=open("arquivo.txt",'r+')
 except:
   passou=False
   print("\nArquivo: Dados\dado"+data_hoje+".txt Não encontrado!\n")
