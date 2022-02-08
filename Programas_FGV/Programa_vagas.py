@@ -26,7 +26,8 @@ def vaga_estado_mes(estado,vagas,ct_conteudo,meses):#3 nas opções
     if (num==2):
         mes=input("Digite o mes exe (06)->junho: ")
         mes2=input("Digite o segundo mes exe (07)->julho: ")
-    else:
+        mes3=0
+    elif(num==3):
         mes=input("Digite o mes exe (06)->junho: ")
         mes2=input("Digite o segundo mes exe (07)->julho: ")
         mes3=input("Digite o terceiro mes exe (08)->agosto: ")
@@ -116,18 +117,25 @@ def criando_arquivo(ct,estado,vagas,ct_conteudo):#4 nas opções
         print("\nVerifique se o arquivo está aberto\n")
     return ()
 ###########################################################################################
-def para_vagas_totais_no_mes(ct,estado,vagas,ct_conteudo,meses):#5 nas opções
+def para_vagas_totais_no_mes_porct(ct,estado,vagas,ct_conteudo,meses):#5 nas opções
     mes=input("Digite o mes exe 06->junho: ")
+    mes2=input("Digite o segundo mes exe (07)->julho: ")
     cont=0
+    cont2=0
     vagas_por_ct=[]
+    vagas_por_ct2=[]
     for i in range(len(vagas)):
         for j in range(len(vagas[i])):
             if (ct_conteudo[i][j][9:11]==mes):
                 cont+=int(vagas[i][j])
+            elif(ct_conteudo[i][j][9:11]==mes2):
+                cont2+=int(vagas[i][j])
         vagas_por_ct.append(cont)
+        vagas_por_ct2.append(cont2)
         cont=0
+        cont2=0
     exel=[]
-    
+    exel2=[]
     for i in range(len(vagas_por_ct)):
         ct[i]=ct[i].replace('\n','')
         ct[i]=ct[i].replace('CT: ','')
@@ -135,17 +143,29 @@ def para_vagas_totais_no_mes(ct,estado,vagas,ct_conteudo,meses):#5 nas opções
         exel.append(dicio)
         cont+=vagas_por_ct[i]
     dicio={"CT":"TOTAL","Vagas":cont}
+    for i in range(len(vagas_por_ct2)):
+        ct[i]=ct[i].replace('\n','')
+        ct[i]=ct[i].replace('CT: ','')
+        dicio2={'CT':ct[i],'Vagas':vagas_por_ct2[i]}
+        exel2.append(dicio2)
+        cont2+=vagas_por_ct2[i]
+    dicio2={"CT":"TOTAL","Vagas":cont2}
     exel.append(dicio)
     de=pd.DataFrame(exel)
+    exel2.append(dicio2)
+    df=pd.DataFrame(exel2)
     try:
         mes=int(mes)
         mes=meses[mes-1]
-        arquivo=pd.ExcelWriter("Resultado_porCT_"+mes+".xlsx")
+        mes2=int(mes2)
+        mes2=meses[mes2-1]
+        arquivo=pd.ExcelWriter("Resultado_porCT_.xlsx")
     except:
         print("Erro na abertura de arquivo")
         print("\nVerifique se o arquivo está aberto\n")
     try:
         de.to_excel(arquivo,sheet_name="Vagas em "+mes)
+        df.to_excel(arquivo,sheet_name="Vagas em "+mes2)
         arquivo.save()
         print()
         print("Arquivo salvo com sucesso!")
@@ -426,6 +446,9 @@ if (passou):
           data_pegar.append(japa[i])  
   for i in data_pegar:
       print(i)
+  data_pegar=data
+  data_pegar.append("01/04/2022")
+  
   while  True:
         print("Digite 1- para VAGAS TOTAIS")
         print("Digite 2- para VAGAS TOTAIS NO MES")
@@ -445,7 +468,7 @@ if (passou):
         elif(entrada==4):
             criando_arquivo(ct,estado,vagas,ct_conteudo)
         elif(entrada==5):
-            para_vagas_totais_no_mes(ct,estado,vagas,ct_conteudo,meses)
+            para_vagas_totais_no_mes_porct(ct,estado,vagas,ct_conteudo,meses)
         elif (entrada==6):
             por_dia(ct,vagas,ct_conteudo)
         elif(entrada==7):
@@ -456,3 +479,4 @@ if (passou):
         ence=int(input("Encerrar programa? 1 - Sim, 2 - Não: "))
         if (ence==1):
             break
+
