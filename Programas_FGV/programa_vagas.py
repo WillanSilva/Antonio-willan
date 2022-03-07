@@ -91,7 +91,7 @@ def criando_arquivo(ct,estado,vagas,ct_conteudo):#4 nas opções
         print("\nVerifique se o arquivo está aberto\n")
     return ()
 ###########################################################################################
-def para_vagas_totais_no_mes(ct,estado,vagas,ct_conteudo,meses):#5 nas opções
+def para_vagas_totais_no_mes1(ct,estado,vagas,ct_conteudo,meses):#5 nas opções
     mes=input("Digite o mes exe 06->junho: ")
     cont=0
     vagas_por_ct=[]
@@ -314,7 +314,7 @@ if (passou):
       elif(entrada==4):
           criando_arquivo(ct,estado,vagas,ct_conteudo)
       elif(entrada==5):
-          para_vagas_totais_no_mes(ct,estado,vagas,ct_conteudo,meses)
+          para_vagas_totais_no_mes1(ct,estado,vagas,ct_conteudo,meses)
       elif (entrada==6):
         por_dia(ct,vagas,ct_conteudo)
       elif(entrada==7):
